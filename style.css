@@ -1,0 +1,419 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background: #1e1e1e;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.terminal {
+    width: 100%;
+    height: 100vh;
+    background: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.terminal-header {
+    background: #323232;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #444;
+}
+
+.terminal-title {
+    color: #ccc;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.btn.close {
+    background: #ff5f56;
+}
+
+.btn.minimize {
+    background: #ffbd2e;
+}
+
+.btn.maximize {
+    background: #27c93f;
+}
+
+.terminal-body {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    background: #1e1e1e;
+}
+
+.output {
+    color: #f0f0f0;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.output-line {
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+
+.output-command {
+    color: #6c757d;
+    margin-bottom: 5px;
+}
+
+.output-result {
+    color: #f0f0f0;
+}
+
+.output-error {
+    color: #ff6b6b;
+}
+
+.input-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.prompt {
+    color: #4ec9b0;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.command-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #f0f0f0;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    outline: none;
+    caret-color: #f0f0f0;
+}
+
+.command-input::selection {
+    background: #264f78;
+}
+
+/* Scrollbar styling */
+.terminal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+/* File/Directory styling */
+.file-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.file-item {
+    color: #f0f0f0;
+}
+
+.directory {
+    color: #569cd6;
+    font-weight: bold;
+}
+
+.file {
+    color: #9cdcfe;
+}
+
+/* Welcome message */
+.welcome-message {
+    color: #4ec9b0;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Help table */
+.help-table {
+    margin-top: 10px;
+    color: #f0f0f0;
+}
+
+.help-command {
+    color: #ce9178;
+    font-weight: bold;
+}
+
+/* Dragon Slayer Game Styling */
+.game-banner {
+    color: #ffd700;
+    font-weight: bold;
+    text-align: center;
+}
+
+.game-location {
+    color: #87ceeb;
+    font-weight: bold;
+}
+
+.game-story {
+    color: #dcdcdc;
+    font-style: italic;
+}
+
+.game-question {
+    color: #ffa500;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.game-hint {
+    color: #808080;
+    font-size: 0.9em;
+}
+
+.game-option {
+    color: #98fb98;
+    padding-left: 10px;
+}
+
+.game-description {
+    color: #add8e6;
+}
+
+.game-npc {
+    color: #ffb6c1;
+    font-style: italic;
+}
+
+.game-gold {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.game-success {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.game-reward {
+    color: #ff69b4;
+    font-weight: bold;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+.game-equipped {
+    color: #daa520;
+}
+
+.game-items {
+    color: #9370db;
+    font-weight: bold;
+}
+
+.game-empty {
+    color: #808080;
+    font-style: italic;
+}
+
+.game-stats {
+    color: #00bfff;
+    font-family: monospace;
+}
+
+.game-combat {
+    color: #ff4500;
+    font-weight: bold;
+}
+
+.game-enemy {
+    color: #ff6347;
+    font-weight: bold;
+}
+
+.game-player {
+    color: #7fff00;
+    font-weight: bold;
+}
+
+.game-combat-action {
+    color: #00ff7f;
+}
+
+.game-combat-special {
+    color: #ffff00;
+    font-weight: bold;
+    text-shadow: 0 0 5px #ffff00;
+}
+
+.game-combat-enemy {
+    color: #ff4500;
+}
+
+.game-victory {
+    color: #00ff00;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.game-exp {
+    color: #da70d6;
+}
+
+.game-levelup {
+    color: #ff1493;
+    font-weight: bold;
+    font-size: 1.1em;
+    animation: pulse 0.5s ease-in-out 3;
+}
+
+.game-dragon {
+    color: #ff0000;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.game-dragon-speak {
+    color: #8b0000;
+    font-weight: bold;
+    font-size: 1.3em;
+    text-transform: uppercase;
+}
+
+.game-defeat {
+    color: #b22222;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.game-final {
+    color: #ff6347;
+    font-weight: bold;
+    animation: shake 0.5s;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4;
+    }
+    to {
+        text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Theme Selector Styling */
+.theme-header {
+    color: #87ceeb;
+    font-weight: bold;
+}
+
+.theme-instruction {
+    color: #ffa500;
+    font-style: italic;
+}
+
+.theme-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.theme-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.theme-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-selected {
+    background: rgba(78, 201, 176, 0.15);
+    border-left: 3px solid #4ec9b0;
+}
+
+.theme-arrow {
+    color: #4ec9b0;
+    font-weight: bold;
+    width: 20px;
+    display: inline-block;
+}
+
+.theme-name {
+    font-weight: bold;
+    flex: 1;
+    font-size: 16px;
+}
+
+.theme-preview {
+    width: 60px;
+    height: 30px;
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.theme-applied {
+    color: #00ff00;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.theme-cancelled {
+    color: #ff6b6b;
+    font-style: italic;
+}

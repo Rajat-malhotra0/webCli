@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web CLI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <span class="terminal-title">Web CLI Terminal</span>
+            <div class="terminal-buttons">
+                <span class="btn minimize"></span>
+                <span class="btn maximize"></span>
+                <span class="btn close"></span>
+            </div>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+            <div class="output" id="output"></div>
+            <div class="input-line">
+                <span class="prompt" id="prompt">user@webcli:~$</span>
+                <input type="text" class="command-input" id="command-input" autofocus autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
