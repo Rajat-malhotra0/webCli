@@ -128,14 +128,14 @@ Each theme includes custom colors for:
 
 Themes persist across browser sessions using localStorage.
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 - **Pure HTML/CSS/JavaScript** - No frameworks or dependencies
 - **localStorage** - Theme and preference persistence
 - **Responsive Design** - Works on all screen sizes
 - **Keyboard-Driven** - Full keyboard navigation support
 
-## 📝 Tips & Tricks
+## Tips & Tricks
 
 1. **Theme for Time of Day**: Use light themes during day, dark at night
 2. **Game Progress**: Dragon Slayer progress is maintained during session
@@ -172,9 +172,6 @@ theme          # Open theme selector
 - [Dragon Slayer Game Guide](README_DRAGON_SLAYER.md) - Full RPG documentation
 - [Theme Guide](THEME_GUIDE.md) - All about themes and customization
 
-## Credits
-
-Built with ❤️ using vanilla JavaScript, HTML, and CSS.
 
 ## Known Features
 
@@ -184,5 +181,3 @@ Built with ❤️ using vanilla JavaScript, HTML, and CSS.
 - Game progress resets on page reload (adds replayability!)
 
 ---
-
-**Enjoy your CLI adventure!** Type `help` to get started or `dragon-slayer` to begin your quest! 🎮⚔️🐉
