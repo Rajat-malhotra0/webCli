@@ -1,20 +1,20 @@
-# 🖥️ Web CLI - Terminal in Your Browser
+# Web CLI - Terminal in Your Browser
 
 A fully functional command-line interface that runs in your web browser with an epic RPG game and customizable themes!
 
-## 🚀 Quick Start
+## Quick Start
 
 1. Open `index.html` in your browser
 2. Start typing commands!
 
-## ✨ Features
+## Features
 
-### 📂 File System Operations
+### File System Operations
 - `ls`, `cd`, `pwd`, `mkdir`, `touch`
 - `cat`, `rm`, `cp`, `mv`
 - `grep`, `wc`, `head`, `tail`, `find`
 
-### 🎮 Built-in RPG Game
+### Built-in RPG Game
 Type `dragon-slayer` to start an epic text-based adventure!
 - Turn-based combat system
 - Character progression & leveling
@@ -24,7 +24,7 @@ Type `dragon-slayer` to start an epic text-based adventure!
 
 See [README_DRAGON_SLAYER.md](README_DRAGON_SLAYER.md) for full game guide.
 
-### 🎨 Theme Customization
+### Theme Customization
 Type `theme` to choose from 12 beautiful themes!
 - Use arrow keys (↑/↓) to navigate
 - Press Enter to apply
@@ -47,7 +47,7 @@ Type `theme` to choose from 12 beautiful themes!
 
 See [THEME_GUIDE.md](THEME_GUIDE.md) for detailed theme info.
 
-## 📋 Available Commands
+## Available Commands
 
 | Command | Description |
 |---------|-------------|
@@ -76,14 +76,14 @@ See [THEME_GUIDE.md](THEME_GUIDE.md) for detailed theme info.
 | `dragon-slayer` | Start RPG game |
 | `theme` | Change theme |
 
-## ⌨️ Keyboard Shortcuts
+## Keyboard Shortcuts
 
 - **↑/↓** - Navigate command history
 - **Tab** - Auto-complete commands
 - **Ctrl+C** - Cancel current operation
 - **Enter** - Execute command
 
-## 🎯 Special Features
+## Special Features
 
 ### Command History
 - Use arrow keys to navigate through previous commands
@@ -104,7 +104,7 @@ See [THEME_GUIDE.md](THEME_GUIDE.md) for detailed theme info.
 - Auto-save preferences
 - Instant preview
 
-## 🎮 Dragon Slayer Game Features
+## Dragon Slayer Game Features
 
 - **Rich Story**: Epic narrative in Kingdom of Aethermoor
 - **Combat System**: Turn-based with multiple attack options
@@ -114,7 +114,7 @@ See [THEME_GUIDE.md](THEME_GUIDE.md) for detailed theme info.
 - **Shop System**: Buy weapons, armor, and potions
 - **Final Boss**: Ancient Dragon King battle
 
-## 🎨 Theme Customization
+## Theme Customization
 
 Each theme includes custom colors for:
 - Background
@@ -143,7 +143,7 @@ Themes persist across browser sessions using localStorage.
 4. **Tab Completion**: Save time by using Tab for command completion
 5. **Explore Files**: Use `ls`, `cd`, and `cat` to explore the file system
 
-## 🎯 Getting Started
+## Getting Started
 
 ### For General Use:
 ```bash
@@ -167,16 +167,16 @@ theme          # Open theme selector
 # Press Enter to apply
 ```
 
-## 📚 Documentation
+## Documentation
 
 - [Dragon Slayer Game Guide](README_DRAGON_SLAYER.md) - Full RPG documentation
 - [Theme Guide](THEME_GUIDE.md) - All about themes and customization
 
-## 🌟 Credits
+## Credits
 
 Built with ❤️ using vanilla JavaScript, HTML, and CSS.
 
-## 🐛 Known Features
+## Known Features
 
 - Command history persists during session
 - Theme preferences saved permanently
