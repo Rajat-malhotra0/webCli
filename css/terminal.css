@@ -1,0 +1,148 @@
+/* Terminal Window */
+.terminal {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color); /* No more glass for main bg, maybe just dark */
+    /* background: var(--glass-bg); -- Optional: keep glass if background image exists? */
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.terminal-header {
+    background: var(--header-bg);
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+    user-select: none;
+}
+
+.terminal-title {
+    color: #ccc;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Hide buttons for full screen mode */
+.terminal-buttons {
+    display: none;
+}
+
+.terminal-body {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    background: transparent;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Status Bar */
+.status-bar {
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid var(--glass-border);
+    padding: 5px 15px;
+    color: #888;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+}
+
+/* Resize Handle - Hidden */
+.resize-handle {
+    display: none;
+}
+
+/* Output Styling */
+.output {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.output-line {
+    margin-bottom: 2px;
+}
+
+.output-command {
+    color: var(--command-color);
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+.output-result { color: var(--text-color); }
+.output-error { color: var(--error-color); }
+
+.input-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.prompt {
+    color: var(--prompt-color);
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.command-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: var(--font-stack);
+    font-size: 15px;
+    outline: none;
+    caret-color: var(--text-color);
+    padding: 0;
+}
+
+/* Scrollbar styling */
+.terminal-body::-webkit-scrollbar { width: 10px; }
+.terminal-body::-webkit-scrollbar-track { background: transparent; }
+.terminal-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0); /* Creates padding effect */
+    background-clip: padding-box;
+}
+.terminal-body::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* File/Directory styling */
+.file-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.file-item, .directory, .file {
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.directory { color: var(--directory-color); font-weight: bold; }
+.file { color: var(--file-color); }
+
+/* Welcome message */
+.welcome-message {
+    color: var(--prompt-color);
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(78, 201, 176, 0.3);
+}
+
+/* Help table */
+.help-table { margin-top: 10px; }
+.help-command { color: #ce9178; font-weight: bold; margin-right: 15px; }

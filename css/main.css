@@ -1,0 +1,60 @@
+:root {
+    --bg-color: #1e1e1e;
+    --header-bg: rgba(30, 30, 30, 1);
+    --text-color: #f0f0f0;
+    --prompt-color: #4ec9b0;
+    --command-color: #6c757d;
+    --error-color: #ff6b6b;
+    --directory-color: #569cd6;
+    --file-color: #9cdcfe;
+    --glass-bg: rgba(30, 30, 30, 0.95);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --font-stack: 'Fira Code', 'Courier New', Courier, monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-stack);
+    background: #0d0d0d;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* CRT Effect */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0) 50%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.1)
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 1000;
+    animation: scanline 10s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes scanline {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
+}
+
+/* Desktop Environment - Just a wrapper now */
+.desktop {
+    width: 100%;
+    height: 100%;
+}
