@@ -4,6 +4,9 @@ class WebCLI {
         this.output = document.getElementById('output');
         this.terminalBody = document.getElementById('terminal-body');
         this.prompt = document.getElementById('prompt');
+        this.terminal = document.getElementById('terminal');
+        this.terminalHeader = document.getElementById('terminal-header');
+        this.statusTime = document.getElementById('status-time');
         
         // File system simulation
         this.currentPath = '/home/user';
@@ -88,7 +91,12 @@ class WebCLI {
         this.loadSavedTheme();
         this.printWelcome();
         this.commandInput.addEventListener('keydown', (e) => this.handleKeyPress(e));
-        this.terminalBody.addEventListener('click', () => this.commandInput.focus());
+        this.terminalBody.addEventListener('click', () => {
+             // Only focus if text is not selected
+             if (window.getSelection().toString().length === 0) {
+                 this.commandInput.focus();
+             }
+        });
         
         // Button functionality
         document.querySelector('.btn.close').addEventListener('click', () => {
@@ -100,6 +108,106 @@ class WebCLI {
         document.querySelector('.btn.minimize').addEventListener('click', () => {
             this.terminalBody.style.display = this.terminalBody.style.display === 'none' ? 'block' : 'none';
         });
+
+        document.querySelector('.btn.maximize').addEventListener('click', () => {
+            if (this.terminal.style.width === '100vw') {
+                // Restore
+                this.terminal.style.width = '900px';
+                this.terminal.style.height = '600px';
+                this.terminal.style.top = '50%';
+                this.terminal.style.left = '50%';
+                this.terminal.style.transform = 'translate(-50%, -50%)';
+            } else {
+                // Maximize
+                this.terminal.style.width = '100vw';
+                this.terminal.style.height = '100vh';
+                this.terminal.style.top = '0';
+                this.terminal.style.left = '0';
+                this.terminal.style.transform = 'none';
+            }
+        });
+
+        // Initialize UI features
+        this.initDraggable();
+        this.initResizable();
+        this.startClock();
+    }
+
+    initDraggable() {
+        let isDragging = false;
+        let startX, startY, initialLeft, initialTop;
+
+        this.terminalHeader.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('btn')) return; // Don't drag if clicking buttons
+
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+
+            // Get current position
+            const rect = this.terminal.getBoundingClientRect();
+            initialLeft = rect.left;
+            initialTop = rect.top;
+
+            // Remove transform centering if it exists to switch to absolute positioning
+            this.terminal.style.transform = 'none';
+            this.terminal.style.left = `${initialLeft}px`;
+            this.terminal.style.top = `${initialTop}px`;
+            this.terminal.style.margin = '0';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            this.terminal.style.left = `${initialLeft + dx}px`;
+            this.terminal.style.top = `${initialTop + dy}px`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+    }
+
+    initResizable() {
+        const handle = document.querySelector('.resize-handle');
+        let isResizing = false;
+        let startX, startY, startWidth, startHeight;
+
+        handle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startWidth = parseInt(document.defaultView.getComputedStyle(this.terminal).width, 10);
+            startHeight = parseInt(document.defaultView.getComputedStyle(this.terminal).height, 10);
+            e.stopPropagation();
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            const width = startWidth + e.clientX - startX;
+            const height = startHeight + e.clientY - startY;
+
+            // Min dimensions
+            if (width > 400) this.terminal.style.width = width + 'px';
+            if (height > 300) this.terminal.style.height = height + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            isResizing = false;
+        });
+    }
+
+    startClock() {
+        const updateTime = () => {
+            const now = new Date();
+            this.statusTime.textContent = now.toLocaleTimeString();
+        };
+        updateTime();
+        setInterval(updateTime, 1000);
     }
     
     printWelcome() {
@@ -190,6 +298,11 @@ class WebCLI {
                 ['history', 'Show command history'],
                 ['tree', 'Display directory tree'],
                 ['uname [-a]', 'Display system information'],
+                ['fetch', 'Display system information with ASCII art'],
+                ['todo [add/rm/list]', 'Manage todo list'],
+                ['calc [expression]', 'Calculate mathematical expression'],
+                ['weather [city]', 'Check current weather'],
+                ['matrix', 'Enter the matrix (screensaver)'],
                 ['dragon-slayer', 'Start the Dragon Slayer RPG game'],
                 ['theme', 'Change terminal theme (use arrow keys to select)']
             ];
@@ -209,6 +322,199 @@ class WebCLI {
         
         theme: function() {
             this.showThemeSelector();
+        },
+
+        fetch: function() {
+            const logo = [
+                '   _    _      _      ___ _    ___ ',
+                '  | |  | |    | |    / __| |  |_ _|',
+                '  | |/\\| | ___| |__ | (__| |__ | | ',
+                '  |__/\\__|_/___|_.__|\\___|____|___|',
+                '                                   '
+            ];
+
+            const info = [
+                `<span style="color: var(--prompt-color); font-weight: bold;">user@webcli</span>`,
+                `------------------`,
+                `<span style="color: var(--text-color);">OS</span>: ${navigator.platform}`,
+                `<span style="color: var(--text-color);">Host</span>: Web Browser`,
+                `<span style="color: var(--text-color);">Browser</span>: ${navigator.userAgent.split(' ')[0]}`,
+                `<span style="color: var(--text-color);">Resolution</span>: ${window.screen.width}x${window.screen.height}`,
+                `<span style="color: var(--text-color);">Date</span>: ${new Date().toLocaleDateString()}`
+            ];
+
+            // Add theme info if available
+            try {
+                const savedTheme = JSON.parse(localStorage.getItem('cli-theme'));
+                if (savedTheme) {
+                    info.push(`<span style="color: var(--text-color);">Theme</span>: ${savedTheme.name}`);
+                }
+            } catch(e) {}
+
+            let output = '<div style="display: flex; gap: 20px; margin: 10px 0;">';
+
+            // Logo column
+            output += '<div style="color: var(--directory-color); font-weight: bold; line-height: 1.2;">';
+            output += logo.join('\n').replace(/ /g, '&nbsp;');
+            output += '</div>';
+
+            // Info column
+            output += '<div style="line-height: 1.2;">';
+            info.forEach(line => output += line + '\n');
+
+            // Color palette
+            output += '\n<div style="display: flex; gap: 5px; margin-top: 5px;">';
+            ['#000000', '#ff5555', '#50fa7b', '#f1fa8c', '#bd93f9', '#ff79c6', '#8be9fd', '#ffffff'].forEach(color => {
+                output += `<span style="display: inline-block; width: 12px; height: 12px; background: ${color}; border-radius: 2px;"></span>`;
+            });
+            output += '</div></div></div>';
+
+            this.printLine(output);
+        },
+
+        todo: function(args) {
+            if (args.length === 0 || args[0] === 'list') {
+                const todos = JSON.parse(localStorage.getItem('cli-todos') || '[]');
+                if (todos.length === 0) {
+                    this.printLine('No todos found. Use "todo add <task>" to create one.');
+                    return;
+                }
+                this.printLine('TODO List:', 'directory');
+                todos.forEach((todo, index) => {
+                    const status = todo.done ? '[x]' : '[ ]';
+                    const style = todo.done ? 'color: #00ff00; text-decoration: line-through;' : '';
+                    this.printLine(`${index + 1}. <span style="${style}">${status} ${todo.text}</span>`);
+                });
+            } else if (args[0] === 'add') {
+                const text = args.slice(1).join(' ');
+                if (!text) {
+                    this.printLine('Usage: todo add <task>', 'output-error');
+                    return;
+                }
+                const todos = JSON.parse(localStorage.getItem('cli-todos') || '[]');
+                todos.push({ text, done: false });
+                localStorage.setItem('cli-todos', JSON.stringify(todos));
+                this.printLine(`Added task: "${text}"`);
+            } else if (args[0] === 'rm') {
+                const index = parseInt(args[1]) - 1;
+                const todos = JSON.parse(localStorage.getItem('cli-todos') || '[]');
+                if (isNaN(index) || index < 0 || index >= todos.length) {
+                    this.printLine('Usage: todo rm <id>', 'output-error');
+                    return;
+                }
+                const removed = todos.splice(index, 1);
+                localStorage.setItem('cli-todos', JSON.stringify(todos));
+                this.printLine(`Removed task: "${removed[0].text}"`);
+            } else if (args[0] === 'done') {
+                const index = parseInt(args[1]) - 1;
+                const todos = JSON.parse(localStorage.getItem('cli-todos') || '[]');
+                if (isNaN(index) || index < 0 || index >= todos.length) {
+                    this.printLine('Usage: todo done <id>', 'output-error');
+                    return;
+                }
+                todos[index].done = !todos[index].done; // Toggle
+                localStorage.setItem('cli-todos', JSON.stringify(todos));
+                this.printLine(`Marked task as ${todos[index].done ? 'done' : 'pending'}: "${todos[index].text}"`);
+            } else {
+                this.printLine('Usage: todo [add|list|rm|done] ...', 'output-error');
+            }
+        },
+
+        calc: function(args) {
+            if (args.length === 0) {
+                this.printLine('Usage: calc [expression]', 'output-error');
+                return;
+            }
+            const expression = args.join(' ');
+            try {
+                // simple and relatively safe evaluation for a client-side tool
+                // allowing Math. functions as well
+                const result = new Function('return ' + expression)();
+                this.printLine(`${result}`);
+            } catch (e) {
+                this.printLine(`Error: ${e.message}`, 'output-error');
+            }
+        },
+
+        weather: async function(args) {
+            const city = args.join('+') || '';
+            if (!city) {
+                this.printLine('Usage: weather [city]', 'output-error');
+                return;
+            }
+
+            this.printLine(`Fetching weather for ${city}...`);
+
+            try {
+                const response = await fetch(`https://wttr.in/${city}?0AT`);
+                if (!response.ok) throw new Error('Weather service unavailable');
+                const text = await response.text();
+                if (!text.trim()) throw new Error('Empty response');
+                this.printLine(text);
+                this.scrollToBottom();
+            } catch (error) {
+                this.printLine(`Error: ${error.message}`, 'output-error');
+                this.printLine('Falling back to simulation:', 'game-description');
+                this.printLine(`Weather in ${args.join(' ')}: 🌤️  Sunny, 25°C`, 'game-success');
+                this.scrollToBottom();
+            }
+        },
+
+        matrix: function() {
+            const canvas = document.createElement('canvas');
+            canvas.style.position = 'fixed';
+            canvas.style.top = '0';
+            canvas.style.left = '0';
+            canvas.style.width = '100vw';
+            canvas.style.height = '100vh';
+            canvas.style.zIndex = '9999';
+            canvas.style.background = 'black';
+            document.body.appendChild(canvas);
+
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%';
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+            const drops = Array(Math.floor(columns)).fill(1);
+
+            let intervalId;
+
+            // Allow this context to be accessed inside cleanup
+            const self = this;
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#0F0';
+                ctx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < drops.length; i++) {
+                    const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+
+            intervalId = setInterval(draw, 33);
+
+            const cleanup = () => {
+                clearInterval(intervalId);
+                canvas.remove();
+                document.removeEventListener('keydown', cleanup);
+                document.removeEventListener('click', cleanup);
+                self.commandInput.focus();
+            };
+
+            document.addEventListener('keydown', cleanup);
+            document.addEventListener('click', cleanup);
         },
         
         ls: function(args) {
@@ -797,6 +1103,10 @@ class WebCLI {
             ? '~' 
             : this.currentPath.replace('/home/user', '~');
         this.prompt.textContent = `user@webcli:${shortPath}$`;
+
+        // Update status bar too
+        const statusLocation = document.getElementById('status-location');
+        if (statusLocation) statusLocation.textContent = this.currentPath;
     }
     
     printLine(text, className = 'output-result') {

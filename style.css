@@ -1,3 +1,18 @@
+:root {
+    --bg-color: #1e1e1e;
+    --header-bg: rgba(50, 50, 50, 0.9);
+    --text-color: #f0f0f0;
+    --prompt-color: #4ec9b0;
+    --command-color: #6c757d;
+    --error-color: #ff6b6b;
+    --directory-color: #569cd6;
+    --file-color: #9cdcfe;
+    --glass-bg: rgba(30, 30, 30, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    --font-stack: 'Fira Code', 'Courier New', Courier, monospace;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,36 +20,101 @@
 }
 
 body {
-    font-family: 'Courier New', Courier, monospace;
-    background: #1e1e1e;
+    font-family: var(--font-stack);
+    background: #0d0d0d;
+    background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000000 100%);
     margin: 0;
     padding: 0;
     height: 100vh;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.terminal {
-    width: 100%;
+/* CRT Effect */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100vh;
-    background: #1e1e1e;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0) 50%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.1)
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 1000;
+    animation: scanline 10s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes scanline {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
+}
+
+/* Desktop Environment */
+.desktop {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Terminal Window */
+.terminal {
+    width: 900px;
+    height: 600px;
+    min-width: 400px;
+    min-height: 300px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    position: absolute; /* Allows dragging */
+    transition: box-shadow 0.3s ease;
+    /* Initial Centering */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.terminal:focus-within {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(78, 201, 176, 0.3);
 }
 
 .terminal-header {
-    background: #323232;
-    padding: 10px 15px;
+    background: var(--header-bg);
+    padding: 12px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid var(--glass-border);
+    cursor: grab; /* Indicates draggable */
+    user-select: none;
+}
+
+.terminal-header:active {
+    cursor: grabbing;
 }
 
 .terminal-title {
     color: #ccc;
     font-size: 14px;
     font-weight: bold;
+    letter-spacing: 0.5px;
 }
 
 .terminal-buttons {
@@ -47,60 +127,80 @@ body {
     height: 12px;
     border-radius: 50%;
     cursor: pointer;
+    transition: transform 0.1s ease;
 }
 
-.btn.close {
-    background: #ff5f56;
+.btn:hover {
+    transform: scale(1.1);
 }
 
-.btn.minimize {
-    background: #ffbd2e;
-}
-
-.btn.maximize {
-    background: #27c93f;
-}
+.btn.close { background: #ff5f56; }
+.btn.minimize { background: #ffbd2e; }
+.btn.maximize { background: #27c93f; }
 
 .terminal-body {
     padding: 20px;
     flex: 1;
     overflow-y: auto;
-    background: #1e1e1e;
+    background: transparent;
+    font-size: 15px;
+    line-height: 1.6;
 }
 
+/* Status Bar */
+.status-bar {
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid var(--glass-border);
+    padding: 5px 15px;
+    color: #888;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+}
+
+/* Resize Handle */
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    cursor: nwse-resize;
+    z-index: 10;
+}
+
+/* Output Styling */
 .output {
-    color: #f0f0f0;
+    color: var(--text-color);
     margin-bottom: 10px;
     white-space: pre-wrap;
     word-wrap: break-word;
 }
 
 .output-line {
-    margin-bottom: 5px;
-    line-height: 1.5;
+    margin-bottom: 2px;
 }
 
 .output-command {
-    color: #6c757d;
-    margin-bottom: 5px;
+    color: var(--command-color);
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 4px;
 }
 
-.output-result {
-    color: #f0f0f0;
-}
-
-.output-error {
-    color: #ff6b6b;
-}
+.output-result { color: var(--text-color); }
+.output-error { color: var(--error-color); }
 
 .input-line {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-top: 5px;
 }
 
 .prompt {
-    color: #4ec9b0;
+    color: var(--prompt-color);
     font-weight: bold;
     white-space: nowrap;
 }
@@ -109,239 +209,96 @@ body {
     flex: 1;
     background: transparent;
     border: none;
-    color: #f0f0f0;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
+    color: var(--text-color);
+    font-family: var(--font-stack);
+    font-size: 15px;
     outline: none;
-    caret-color: #f0f0f0;
-}
-
-.command-input::selection {
-    background: #264f78;
+    caret-color: var(--text-color);
+    padding: 0;
 }
 
 /* Scrollbar styling */
-.terminal-body::-webkit-scrollbar {
-    width: 8px;
-}
-
-.terminal-body::-webkit-scrollbar-track {
-    background: #1e1e1e;
-}
-
+.terminal-body::-webkit-scrollbar { width: 10px; }
+.terminal-body::-webkit-scrollbar-track { background: transparent; }
 .terminal-body::-webkit-scrollbar-thumb {
-    background: #555;
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, 0); /* Creates padding effect */
+    background-clip: padding-box;
 }
-
-.terminal-body::-webkit-scrollbar-thumb:hover {
-    background: #777;
-}
+.terminal-body::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
 
 /* File/Directory styling */
 .file-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 10px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
-.file-item {
-    color: #f0f0f0;
+.file-item, .directory, .file {
+    padding: 5px;
+    border-radius: 4px;
 }
 
-.directory {
-    color: #569cd6;
-    font-weight: bold;
-}
-
-.file {
-    color: #9cdcfe;
-}
+.directory { color: var(--directory-color); font-weight: bold; }
+.file { color: var(--file-color); }
 
 /* Welcome message */
 .welcome-message {
-    color: #4ec9b0;
+    color: var(--prompt-color);
     margin-bottom: 15px;
     font-weight: bold;
+    text-shadow: 0 0 10px rgba(78, 201, 176, 0.3);
 }
 
 /* Help table */
-.help-table {
-    margin-top: 10px;
-    color: #f0f0f0;
-}
+.help-table { margin-top: 10px; }
+.help-command { color: #ce9178; font-weight: bold; margin-right: 15px; }
 
-.help-command {
-    color: #ce9178;
-    font-weight: bold;
-}
-
-/* Dragon Slayer Game Styling */
-.game-banner {
-    color: #ffd700;
-    font-weight: bold;
-    text-align: center;
-}
-
-.game-location {
-    color: #87ceeb;
-    font-weight: bold;
-}
-
-.game-story {
-    color: #dcdcdc;
-    font-style: italic;
-}
-
-.game-question {
-    color: #ffa500;
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-.game-hint {
-    color: #808080;
-    font-size: 0.9em;
-}
-
-.game-option {
-    color: #98fb98;
-    padding-left: 10px;
-}
-
-.game-description {
-    color: #add8e6;
-}
-
-.game-npc {
-    color: #ffb6c1;
-    font-style: italic;
-}
-
-.game-gold {
-    color: #ffd700;
-    font-weight: bold;
-}
-
-.game-success {
-    color: #00ff00;
-    font-weight: bold;
-}
-
-.game-reward {
-    color: #ff69b4;
-    font-weight: bold;
-    animation: glow 1s ease-in-out infinite alternate;
-}
-
-.game-equipped {
-    color: #daa520;
-}
-
-.game-items {
-    color: #9370db;
-    font-weight: bold;
-}
-
-.game-empty {
-    color: #808080;
-    font-style: italic;
-}
-
-.game-stats {
-    color: #00bfff;
-    font-family: monospace;
-}
-
-.game-combat {
-    color: #ff4500;
-    font-weight: bold;
-}
-
-.game-enemy {
-    color: #ff6347;
-    font-weight: bold;
-}
-
-.game-player {
-    color: #7fff00;
-    font-weight: bold;
-}
-
-.game-combat-action {
-    color: #00ff7f;
-}
-
-.game-combat-special {
-    color: #ffff00;
-    font-weight: bold;
-    text-shadow: 0 0 5px #ffff00;
-}
-
-.game-combat-enemy {
-    color: #ff4500;
-}
-
-.game-victory {
-    color: #00ff00;
-    font-size: 1.2em;
-    font-weight: bold;
-    text-shadow: 0 0 10px #00ff00;
-}
-
-.game-exp {
-    color: #da70d6;
-}
-
-.game-levelup {
-    color: #ff1493;
-    font-weight: bold;
-    font-size: 1.1em;
-    animation: pulse 0.5s ease-in-out 3;
-}
-
-.game-dragon {
-    color: #ff0000;
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-.game-dragon-speak {
-    color: #8b0000;
-    font-weight: bold;
-    font-size: 1.3em;
-    text-transform: uppercase;
-}
-
-.game-defeat {
-    color: #b22222;
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-.game-final {
-    color: #ff6347;
-    font-weight: bold;
-    animation: shake 0.5s;
-}
+/*
+   ---------------------------
+   DRAGON SLAYER GAME STYLING
+   ---------------------------
+*/
+.game-banner { color: #ffd700; font-weight: bold; text-align: center; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+.game-location { color: #87ceeb; font-weight: bold; text-decoration: underline; }
+.game-story { color: #dcdcdc; font-style: italic; border-left: 3px solid #555; padding-left: 10px; display: block; margin: 5px 0; }
+.game-question { color: #ffa500; font-weight: bold; font-size: 1.1em; margin-top: 10px; display: block; }
+.game-hint { color: #808080; font-size: 0.9em; }
+.game-option { color: #98fb98; padding-left: 10px; transition: color 0.2s; }
+.game-option:hover { color: #fff; cursor: pointer; }
+.game-description { color: #add8e6; }
+.game-npc { color: #ffb6c1; font-style: italic; }
+.game-gold { color: #ffd700; font-weight: bold; }
+.game-success { color: #00ff00; font-weight: bold; }
+.game-reward { color: #ff69b4; font-weight: bold; animation: glow 1s ease-in-out infinite alternate; }
+.game-equipped { color: #daa520; }
+.game-items { color: #9370db; font-weight: bold; }
+.game-empty { color: #808080; font-style: italic; }
+.game-stats { color: #00bfff; font-family: monospace; border: 1px solid #00bfff; padding: 10px; display: inline-block; }
+.game-combat { color: #ff4500; font-weight: bold; }
+.game-enemy { color: #ff6347; font-weight: bold; font-size: 1.1em; }
+.game-player { color: #7fff00; font-weight: bold; }
+.game-combat-action { color: #00ff7f; }
+.game-combat-special { color: #ffff00; font-weight: bold; text-shadow: 0 0 5px #ffff00; }
+.game-combat-enemy { color: #ff4500; margin-left: 20px; border-left: 2px solid #ff4500; padding-left: 10px; }
+.game-victory { color: #00ff00; font-size: 1.2em; font-weight: bold; text-shadow: 0 0 10px #00ff00; }
+.game-exp { color: #da70d6; }
+.game-levelup { color: #ff1493; font-weight: bold; font-size: 1.1em; animation: pulse 0.5s ease-in-out 3; }
+.game-dragon { color: #ff0000; font-weight: bold; font-size: 1.2em; }
+.game-dragon-speak { color: #8b0000; font-weight: bold; font-size: 1.3em; text-transform: uppercase; letter-spacing: 2px; }
+.game-defeat { color: #b22222; font-weight: bold; font-size: 1.2em; }
+.game-final { color: #ff6347; font-weight: bold; animation: shake 0.5s; }
 
 @keyframes glow {
-    from {
-        text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4;
-    }
-    to {
-        text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
-    }
+    from { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4; }
+    to { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
 }
 
 @keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 @keyframes shake {
@@ -351,69 +308,14 @@ body {
 }
 
 /* Theme Selector Styling */
-.theme-header {
-    color: #87ceeb;
-    font-weight: bold;
-}
-
-.theme-instruction {
-    color: #ffa500;
-    font-style: italic;
-}
-
-.theme-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 10px 0;
-}
-
-.theme-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.theme-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.theme-selected {
-    background: rgba(78, 201, 176, 0.15);
-    border-left: 3px solid #4ec9b0;
-}
-
-.theme-arrow {
-    color: #4ec9b0;
-    font-weight: bold;
-    width: 20px;
-    display: inline-block;
-}
-
-.theme-name {
-    font-weight: bold;
-    flex: 1;
-    font-size: 16px;
-}
-
-.theme-preview {
-    width: 60px;
-    height: 30px;
-    border-radius: 3px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.theme-applied {
-    color: #00ff00;
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-.theme-cancelled {
-    color: #ff6b6b;
-    font-style: italic;
-}
+.theme-header { color: #87ceeb; font-weight: bold; margin-bottom: 10px; display: block; }
+.theme-instruction { color: #ffa500; font-style: italic; margin-bottom: 10px; display: block; }
+.theme-list { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; max-height: 300px; overflow-y: auto; padding-right: 10px; }
+.theme-item { display: flex; align-items: center; gap: 15px; padding: 8px 15px; border-radius: 5px; transition: all 0.2s ease; cursor: pointer; border: 1px solid transparent; }
+.theme-item:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.1); }
+.theme-selected { background: rgba(78, 201, 176, 0.15); border-left: 3px solid #4ec9b0; }
+.theme-arrow { color: #4ec9b0; font-weight: bold; width: 20px; display: inline-block; }
+.theme-name { font-weight: bold; flex: 1; font-size: 16px; }
+.theme-preview { width: 60px; height: 30px; border-radius: 3px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+.theme-applied { color: #00ff00; font-weight: bold; font-size: 1.1em; display: block; margin-top: 10px; }
+.theme-cancelled { color: #ff6b6b; font-style: italic; }
