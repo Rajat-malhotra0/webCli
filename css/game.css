@@ -1,0 +1,50 @@
+/*
+   ---------------------------
+   DRAGON SLAYER GAME STYLING
+   ---------------------------
+*/
+.game-banner { color: #ffd700; font-weight: bold; text-align: center; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+.game-location { color: #87ceeb; font-weight: bold; text-decoration: underline; }
+.game-story { color: #dcdcdc; font-style: italic; border-left: 3px solid #555; padding-left: 10px; display: block; margin: 5px 0; }
+.game-question { color: #ffa500; font-weight: bold; font-size: 1.1em; margin-top: 10px; display: block; }
+.game-hint { color: #808080; font-size: 0.9em; }
+.game-option { color: #98fb98; padding-left: 10px; transition: color 0.2s; }
+.game-option:hover { color: #fff; cursor: pointer; }
+.game-description { color: #add8e6; }
+.game-npc { color: #ffb6c1; font-style: italic; }
+.game-gold { color: #ffd700; font-weight: bold; }
+.game-success { color: #00ff00; font-weight: bold; }
+.game-reward { color: #ff69b4; font-weight: bold; animation: glow 1s ease-in-out infinite alternate; }
+.game-equipped { color: #daa520; }
+.game-items { color: #9370db; font-weight: bold; }
+.game-empty { color: #808080; font-style: italic; }
+.game-stats { color: #00bfff; font-family: monospace; border: 1px solid #00bfff; padding: 10px; display: inline-block; }
+.game-combat { color: #ff4500; font-weight: bold; }
+.game-enemy { color: #ff6347; font-weight: bold; font-size: 1.1em; }
+.game-player { color: #7fff00; font-weight: bold; }
+.game-combat-action { color: #00ff7f; }
+.game-combat-special { color: #ffff00; font-weight: bold; text-shadow: 0 0 5px #ffff00; }
+.game-combat-enemy { color: #ff4500; margin-left: 20px; border-left: 2px solid #ff4500; padding-left: 10px; }
+.game-victory { color: #00ff00; font-size: 1.2em; font-weight: bold; text-shadow: 0 0 10px #00ff00; }
+.game-exp { color: #da70d6; }
+.game-levelup { color: #ff1493; font-weight: bold; font-size: 1.1em; animation: pulse 0.5s ease-in-out 3; }
+.game-dragon { color: #ff0000; font-weight: bold; font-size: 1.2em; }
+.game-dragon-speak { color: #8b0000; font-weight: bold; font-size: 1.3em; text-transform: uppercase; letter-spacing: 2px; }
+.game-defeat { color: #b22222; font-weight: bold; font-size: 1.2em; }
+.game-final { color: #ff6347; font-weight: bold; animation: shake 0.5s; }
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4; }
+    to { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}

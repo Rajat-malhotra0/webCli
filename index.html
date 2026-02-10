@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web CLI</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/terminal.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/themes.css">
 </head>
 <body>
     <div class="scanlines"></div>
@@ -12,11 +15,6 @@
         <div class="terminal" id="terminal">
             <div class="terminal-header" id="terminal-header">
                 <span class="terminal-title">Web CLI Terminal</span>
-                <div class="terminal-buttons">
-                    <span class="btn minimize"></span>
-                    <span class="btn maximize"></span>
-                    <span class="btn close"></span>
-                </div>
             </div>
             <div class="terminal-body" id="terminal-body">
                 <div class="output" id="output"></div>
@@ -30,9 +28,8 @@
                 <span id="status-location">/home/user</span>
                 <span id="status-time">00:00:00</span>
             </div>
-            <div class="resize-handle"></div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

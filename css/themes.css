@@ -1,0 +1,12 @@
+/* Theme Selector Styling */
+.theme-header { color: #87ceeb; font-weight: bold; margin-bottom: 10px; display: block; }
+.theme-instruction { color: #ffa500; font-style: italic; margin-bottom: 10px; display: block; }
+.theme-list { display: flex; flex-direction: column; gap: 8px; margin: 10px 0; max-height: 300px; overflow-y: auto; padding-right: 10px; }
+.theme-item { display: flex; align-items: center; gap: 15px; padding: 8px 15px; border-radius: 5px; transition: all 0.2s ease; cursor: pointer; border: 1px solid transparent; }
+.theme-item:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.1); }
+.theme-selected { background: rgba(78, 201, 176, 0.15); border-left: 3px solid #4ec9b0; }
+.theme-arrow { color: #4ec9b0; font-weight: bold; width: 20px; display: inline-block; }
+.theme-name { font-weight: bold; flex: 1; font-size: 16px; }
+.theme-preview { width: 60px; height: 30px; border-radius: 3px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+.theme-applied { color: #00ff00; font-weight: bold; font-size: 1.1em; display: block; margin-top: 10px; }
+.theme-cancelled { color: #ff6b6b; font-style: italic; }
